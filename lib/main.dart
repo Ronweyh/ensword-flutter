@@ -46,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Column(
           children: <Widget>[
             const Video(),
-            Obx(() => Text(videoController.playTime.toString())),
+            Obx(() => Text(videoController.playTimeStr.value)),
             const Expanded(child: Subtitles()),
           ],
         ));

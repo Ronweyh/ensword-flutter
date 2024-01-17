@@ -18,7 +18,7 @@ class _VideoState extends State<Video> {
   @override
   void initState() {
     super.initState();
-    final VideoController videoController = Get.put(VideoController());
+    VideoController videoController = Get.find<VideoController>();
     _controller = YoutubePlayerController(
       initialVideoId: videoController.videoId.value,
       flags: const YoutubePlayerFlags(
@@ -26,11 +26,17 @@ class _VideoState extends State<Video> {
         mute: false,
       ),
     )..addListener(videoListener);
+    videoController.setController(_controller);
   }
 
   void videoListener() {
-    final VideoController videoController = Get.put(VideoController());
+    VideoController videoController = Get.find<VideoController>();
     videoController.setPlayTime(_controller.value.position.inSeconds.toDouble());
+    videoController.setPlayTimeStr(
+        _controller.value.position.inHours,
+        _controller.value.position.inMinutes,
+        _controller.value.position.inSeconds);
+    
   }
 
   @override

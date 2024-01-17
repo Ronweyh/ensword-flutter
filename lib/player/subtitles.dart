@@ -1,5 +1,7 @@
 import 'package:ensword_flutter/player/srt_parser.dart';
+import 'package:ensword_flutter/player/video_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Subtitles extends StatefulWidget {
   const Subtitles({super.key});
@@ -48,7 +50,7 @@ Today, I want to tell you
   Widget build(BuildContext context) {
     // parseSrt(srt)
     return Container(
-      color: Colors.grey[200], // Adjust color as needed
+      color: Colors.white, // Adjust color as needed
       child: ListView.builder(
         itemCount: subtitles.length,
         itemBuilder: (BuildContext context, int index) {
@@ -59,12 +61,17 @@ Today, I want to tell you
   }
 
   Widget _buildSubtitle(Subtitle subtitle) {
+    VideoController videoController = Get.find<VideoController>();
     return Container(
       height: 28,
       padding: const EdgeInsets.all(4),
-      child: ListTile(
-          title: Text(subtitle.rawLines.join('\n'),
-              style: const TextStyle(fontSize: 14))),
+      child: GestureDetector(
+            onTap: () {
+              // print(subtitle.rawLines.join(''));
+              videoController.seekTo(subtitle.range.begin);
+            },
+            child: Text(subtitle.rawLines.join(''),
+                style: const TextStyle(fontSize: 14))),
     );
   }
 }
