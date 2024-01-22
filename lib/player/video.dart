@@ -31,7 +31,7 @@ class _VideoState extends State<Video> {
 
   void videoListener() {
     VideoController videoController = Get.find<VideoController>();
-    videoController.setPlayTime(_controller.value.position.inSeconds.toDouble());
+    videoController.setPlayTime(_controller.value.position.inMilliseconds.toDouble());
     videoController.setPlayTimeStr(
         _controller.value.position.inHours,
         _controller.value.position.inMinutes,

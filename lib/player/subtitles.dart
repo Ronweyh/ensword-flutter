@@ -62,16 +62,29 @@ Today, I want to tell you
 
   Widget _buildSubtitle(Subtitle subtitle) {
     VideoController videoController = Get.find<VideoController>();
-    return Container(
-      height: 28,
-      padding: const EdgeInsets.all(4),
-      child: GestureDetector(
-            onTap: () {
-              // print(subtitle.rawLines.join(''));
-              videoController.seekTo(subtitle.range.begin);
-            },
-            child: Text(subtitle.rawLines.join(''),
-                style: const TextStyle(fontSize: 14))),
-    );
+    return SizedBox(
+        height: 28,
+        // padding: const EdgeInsets.all(4),
+        child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              splashColor: Colors.greenAccent[100],
+              highlightColor: Colors.greenAccent[900],
+              onTap: () {
+                // print(subtitle.rawLines.join(''));
+                videoController.seekTo(subtitle.range.begin);
+              },
+              child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Obx(() {
+                    Color textColor = videoController.playTime.value >=
+                                subtitle.range.begin &&
+                            videoController.playTime.value <= subtitle.range.end
+                        ? Colors.greenAccent[700]!
+                        : Colors.black;
+                    return Text(subtitle.rawLines.join(''),
+                        style: TextStyle(fontSize: 14, color: textColor));
+                  })),
+            )));
   }
 }
